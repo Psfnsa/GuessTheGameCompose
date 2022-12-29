@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+ web:
+  build: ./GuessTheGameSPA
+  ports:
+   - 8080:80
+ api:
+  build: ./GuessTheGameApi
+  environment:
+   - ConnectionStrings__DefaultConnection=Server=db;Database=GuessTheGameDB;User=sa;Password=Mere!234;MultipleActiveResultSets=true;Integrated Security=false;TrustServerCertificate=true;
+  ports:
+    - 7279:80
+  depends_on:
+   - db
+ db:
+  image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+  environment:
+   - ACCEPT_EULA=Y
+   - SA_PASSWORD=Mere!234
+  ports:
+   - 1433:1433
